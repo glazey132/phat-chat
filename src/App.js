@@ -1,75 +1,25 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import "./App.css";
-import {
-  Container,
-  Row,
-  Col,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input
-} from "reactstrap";
-import Header from "./Header";
+import Register from './components/Register'
+import Login from './components/Login'
+import Header from "./components/Header";
 
 function App() {
+  const loggedIn = false;
   return (
     <Router>
       <Header />
-
-      <Route exact path="/" component={Login} />
+      <Route exact path="/" render={() => (
+        loggedIn ? (
+          <Redirect to="/dashboard/" />
+        ) : (
+          <Login />
+        )
+      )}/>
       <Route path="/register" component={Register} />
-        {/* <Route path="/topics" component={Topics} /> */}
+      {/* <Route path="/topics" component={Topics} /> */}
     </Router>
-  );
-}
-
-function Login() {
-  return (
-    <Container fluid className="auth-container">
-      <Row>
-        <Col>
-            <h1>Login</h1>
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-              <Input placeholder="username" />
-            </InputGroup>
-            <br />
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-              <Input placeholder="password" />
-            </InputGroup>
-            <a href="/register">Sign Up</a>
-        </Col>
-      </Row>
-    </Container>
-  );
-}
-
-function Register() {
-  return (
-    <Container fluid className="auth-container">
-      <Row>
-        <Col>
-            <h1>Register</h1>
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-              <Input placeholder="email" />
-            </InputGroup>
-            <br />
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-              <Input placeholder="Password" />
-            </InputGroup>
-            <br />
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">@</InputGroupAddon>
-              <Input placeholder="Confirm Password" />
-            </InputGroup>
-            <a href="/">Login</a>
-        </Col>
-      </Row>
-    </Container>
   );
 }
 
